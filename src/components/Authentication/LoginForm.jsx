@@ -18,6 +18,7 @@ export default function LoginForm() {
     <form onSubmit={onSubmit} className="max-w-sm mx-auto p-4">
       {error && <div className="text-red-600">{error}</div>}
       <div>
+      
         <label>Email</label>
         <input
           type="email"
