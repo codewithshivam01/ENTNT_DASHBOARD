@@ -8,7 +8,7 @@ export default function MaintenanceList() {
   const { equipment } = useContext(EquipmentContext);
 
   return (
-    <table className="w-full mt-4">
+    <table className="w-full mt-4 dark:text-gray-400">
       <thead>
         <tr>
           {['Equipment','Date','Type','Notes','Actions'].map(h => (

@@ -29,8 +29,8 @@ export default function KPICards() {
         { label: 'Overdue Rentals', value: overdue },
         { label: 'Upcoming Maintenance', value: upcoming }
       ].map(kpi => (
-        <div key={kpi.label} className="p-4 bg-white rounded-lg shadow">
-          <h3 className="text-sm text-gray-500">{kpi.label}</h3>
+        <div key={kpi.label} className="p-4 bg-white  dark:bg-gray-800 rounded-lg shadow">
+          <h3 className="text-sm text-gray-500 dark:text-gray-400">{kpi.label}</h3>
           <p className="text-2xl font-bold">{kpi.value}</p>
         </div>
       ))}

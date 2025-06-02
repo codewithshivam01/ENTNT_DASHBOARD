@@ -117,7 +117,7 @@ export default function EquipmentList() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Equipment Inventory</h1>
+        <h1 className="text-2xl font-bold dark:text-gray-400 ">Equipment Inventory</h1>
 
         {/* Show Add Equipment only if NOT staff */}
         {user?.role !== "Staff" && (
@@ -135,12 +135,12 @@ export default function EquipmentList() {
           No equipment found. {user?.role !== "Staff" ? "Add one above." : ""}
         </p>
       ) : (
-        <table className="w-full bg-white rounded shadow overflow-hidden">
-          <thead className="bg-gray-100">
+        <table className="w-full bg-white  dark:text-gray-400 dark:bg-slate-800 rounded shadow overflow-hidden">
+          <thead className="bg-gray-100 dark:bg-slate-800">
             <tr>
               {["Name", "Category", "Condition", "Status", "Actions"].map(
                 (h) => (
-                  <th key={h} className="text-left px-4 py-2">
+                  <th key={h} className="text-left dark:text-gray-400  px-4 py-2">
                     {h}
                   </th>
                 )
@@ -157,13 +157,13 @@ export default function EquipmentList() {
                 <td className="px-4 py-2 space-x-2">
                   <Link
                     to={`/equipment/${e.id}`}
-                    className="text-indigo-600 hover:underline"
+                    className="text-indigo-600  dark:text-green-50 hover:underline"
                   >
                     View
                   </Link>
                   <Link
                     to={`/equipment/${e.id}/edit`}
-                    className="text-blue-600 hover:underline"
+                    className="text-blue-600 dark:text-green-50 hover:underline"
                   >
                     Edit
                   </Link>

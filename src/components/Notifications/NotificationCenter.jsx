@@ -7,7 +7,7 @@ export default function NotificationCenter() {
   if (!notifications.length) return <div>No notifications</div>;
 
   return (
-    <div className="p-4 bg-white rounded shadow max-w-sm">
+    <div className="p-4 bg-white  dark:text-gray-400 rounded shadow max-w-sm">
       <h2 className="font-bold mb-2">Notifications</h2>
       <ul>
         {notifications.map(n => (
