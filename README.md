@@ -8,12 +8,11 @@ A **frontend-only React** application for managing equipment inventory, rental o
 
 1. [Features](#features)
 2. [Tech Stack](#tech-stack)
-3. [Project Structure](#project-structure)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Role-Based Access](#role-based-access)
-7. [Dark Mode](#dark-mode)
-8. [Deployment](#deployment)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Role-Based Access](#role-based-access)
+6. [Dark Mode](#dark-mode)
+7. [Deployment](#deployment)
 
 ---
 
@@ -26,6 +25,10 @@ A **frontend-only React** application for managing equipment inventory, rental o
   - **Customer**: `customer@entnt.in / cust123`
 - Login/logout with session persistence.
 - Protected routes and UI elements based on user role.
+
+![Login Screenshot](.public/Screenshot 2025-06-02 175255.png)
+![Dashboard Screenshot](.public/Screenshot 2025-06-02 175229.png)
+
 
 ### 🧰 Equipment Management
 - Admin: full CRUD.
@@ -80,5 +83,5 @@ A **frontend-only React** application for managing equipment inventory, rental o
 
 ---
 
-## 📁 Project Structure
+
 
