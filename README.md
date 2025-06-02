@@ -6,7 +6,7 @@ README.md for ENTNT Equipment Rental Management Dashboard
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.0-blue.svg)](https://tailwindcss.com/)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black.svg)](https://vercel.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 
 # ENTNT Equipment Rental Management Dashboard
 
@@ -25,7 +25,7 @@ Features **role-based access** (Admin, Staff, Customer), **localStorage persiste
 - [🔐 Role-Based Access](#🔐-role-based-access)  
 - [🌙 Dark Mode](#🌙-dark-mode)  
 - [📦 Deployment](#📦-deployment)  
-- [👩‍💼 License](#👩‍💼-license)  
+ 
 
 ---
 
@@ -39,6 +39,9 @@ Features **role-based access** (Admin, Staff, Customer), **localStorage persiste
   - Login/logout with session persistence.  
   - Protected routes & UI elements based on `user.role`.  
   - Unauthorized redirects to `/unauthorized`.
+
+![Login Page](public/Screenshot-2025-06-02-175229.png)
+![Dashboard Page](public/Screenshot-2025-06-02-175255.png)
 
 - **Equipment Management**  
   - **List**, **Add**, **Edit**, **Delete** equipment (Admin only).  
@@ -168,7 +171,7 @@ src/
 
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/your-username/entnt-equipment-dashboard.git
+   git clone https://github.com/codewithshivam01/ENTNT_DASHBOARD.git
    cd entnt-equipment-dashboard
    ```
 
@@ -273,9 +276,6 @@ src/
 
 ---
 
-## 👩‍💼 License
-
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
 
 ---
 
