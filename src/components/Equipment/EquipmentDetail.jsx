@@ -19,7 +19,7 @@ export default function EquipmentDetail() {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white shadow rounded p-6">
+    <div className="max-w-lg mx-auto bg-white  shadow rounded p-6">
       <h2 className="text-2xl font-bold mb-4">{eq.name}</h2>
       <div className="space-y-2">
         <p><span className="font-semibold ">Category:</span> {eq.category}</p>

@@ -14,20 +14,20 @@ export default function EquipmentDetailPage() {
   if (!eq) return <p>Not found</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl">{eq.name}</h1>
+    <div className="p-6 dark:text-gray-400">
+      <h1 className="text-2xl dark:text-gray-400 ">{eq.name}</h1>
       <p>Category: {eq.category}</p>
       <p>Condition: {eq.condition}</p>
       <p>Status: {eq.status}</p>
 
-      <h2 className="mt-6 text-xl">Rental History</h2>
+      <h2 className="mt-6 text-xl dark:text-gray-400">Rental History</h2>
       <ul>
         {rentals.filter(r => r.equipmentId === id).map(r => (
           <li key={r.id}>{r.startDate} → {r.endDate} ({r.status})</li>
         ))}
       </ul>
 
-      <h2 className="mt-6 text-xl">Maintenance Records</h2>
+      <h2 className="mt-6 text-xl dark:text-gray-400">Maintenance Records</h2>
       <ul>
         {records.filter(m => m.equipmentId === id).map(m => (
           <li key={m.id}>{m.date}: {m.type} – {m.notes}</li>

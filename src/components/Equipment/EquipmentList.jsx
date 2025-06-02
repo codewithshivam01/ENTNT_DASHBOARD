@@ -14,7 +14,7 @@ export default function EquipmentList() {
         <h1 className="text-2xl font-bold dark:text-gray-400 ">Equipment Inventory</h1>
 
         {/* Show Add Equipment only if NOT staff */}
-        {user?.role !== "Staff" && (
+        { user?.role !== "Customer" &&  (
           <Link
             to="/equipment/new"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
@@ -61,7 +61,7 @@ export default function EquipmentList() {
                   >
                     Edit
                   </Link>
-                  {user?.role !== "Staff" && (
+                  {user?.role !== "Staff" && user?.role !== "Customer" &&(
                     <button
                       onClick={() => remove(e.id)}
                       className="text-red-600 hover:underline"
