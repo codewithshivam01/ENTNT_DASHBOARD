@@ -1,15 +1,15 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { NotificationsContext } from "../../contexts/NotificationsContext";
 import NotificationCenter from "../Notifications/NotificationCenter";
-//import { isAdmin, isStaff } from "../../utils/roleUtils";
-import { ThemeContext } from "../../index"; // import the ThemeContext we created
+import { ThemeContext } from "../../index";
 
 export default function NavBar() {
   const { user, logout } = useContext(AuthContext);
-  const { notifications } = useContext(NotificationsContext);
+  const { notifications, clearNotifications } = useContext(NotificationsContext);
   const { isDark, setIsDark } = useContext(ThemeContext);
+  const location = useLocation();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -23,38 +23,34 @@ export default function NavBar() {
       if (notifRef.current && !notifRef.current.contains(event.target)) {
         setNotifOpen(false);
       }
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target)
-      ) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
         setMobileMenuOpen(false);
       }
     }
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Nav links, filtered by role
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const links = [
-    {
-      to: "/dashboard",
-      label: "Dashboard",
-      roles: ["Admin", "Staff", "Customer"],
-    },
-    {
-      to: "/equipment",
-      label: "Equipment",
-      roles: ["Admin", "Staff", "Customer"],
-    },
+    { to: "/dashboard", label: "Dashboard", roles: ["Admin", "Staff", "Customer"] },
+    { to: "/equipment", label: "Equipment", roles: ["Admin", "Staff", "Customer"] },
     { to: "/rentals", label: "Rentals", roles: ["Admin", "Staff", "Customer"] },
     { to: "/maintenance", label: "Maintenance", roles: ["Admin", "Staff"] },
   ];
+
+  const filteredLinks = links.filter(link => link.roles.includes(user.role));
 
   return (
     <nav className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 fixed w-full z-50 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          {/* ───────── Left: Brand ───────── */}
+          {/* Left: Brand */}
           <div className="flex items-center">
             <span
               className="text-2xl font-bold cursor-pointer"
@@ -64,30 +60,27 @@ export default function NavBar() {
             </span>
           </div>
 
-          {/* ───────── Center (Desktop): Links ───────── */}
+          {/* Center (Desktop): Links */}
           <div className="hidden md:flex md:space-x-6 md:items-center">
-            {links.map((link) => {
-              if (!link.roles.includes(user.role)) return null;
-              return (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium transition
-                     ${
-                       isActive
-                         ? "bg-indigo-200 text-indigo-900 dark:bg-indigo-700 dark:text-indigo-100"
-                         : "hover:bg-indigo-100 dark:hover:bg-indigo-800"
-                     }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              );
-            })}
+            {filteredLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium transition
+                  ${
+                    isActive
+                      ? "bg-indigo-200 text-indigo-900 dark:bg-indigo-700 dark:text-indigo-100"
+                      : "hover:bg-indigo-100 dark:hover:bg-indigo-800"
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
           </div>
 
-          {/* ───────── Right: Bell + Dark Toggle + User + Hamburger ───────── */}
+          {/* Right: Controls */}
           <div className="flex items-center space-x-4">
             {/* Notification Bell */}
             <div className="relative" ref={notifRef}>
@@ -95,6 +88,9 @@ export default function NavBar() {
                 onClick={() => {
                   setNotifOpen((o) => !o);
                   setMobileMenuOpen(false);
+                  if (!notifOpen && notifications.length > 0) {
+                    //clearNotifications();
+                  }
                 }}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
               >
@@ -107,7 +103,7 @@ export default function NavBar() {
               </button>
               {notifOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md shadow-lg overflow-hidden z-50">
-                  <NotificationCenter />
+                  <NotificationCenter onClose={() => setNotifOpen(false)} />
                 </div>
               )}
             </div>
@@ -117,11 +113,7 @@ export default function NavBar() {
               onClick={() => setIsDark(!isDark)}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
             >
-              {isDark ? (
-                <span className="text-xl">☀️</span>
-              ) : (
-                <span className="text-xl">🌙</span>
-              )}
+              {isDark ? "☀️" : "🌙"}
             </button>
 
             {/* User Email & Logout (Desktop) */}
@@ -141,11 +133,9 @@ export default function NavBar() {
             {/* Hamburger (Mobile) */}
             <div className="md:hidden flex items-center" ref={mobileMenuRef}>
               <button
-                onClick={() => {
-                  setMobileMenuOpen((o) => !o);
-                  setNotifOpen(false);
-                }}
+                onClick={() => setMobileMenuOpen((o) => !o)}
                 className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
+                aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? "✕" : "☰"}
               </button>
@@ -154,58 +144,55 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* ───────── Mobile Menu (Slide‐down) ───────── */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-indigo-600 dark:bg-indigo-800 border-t border-indigo-700">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {links.map((link) => {
-              if (!link.roles.includes(user.role)) return null;
-              return (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-3 py-2 rounded-md text-base font-medium transition
-                     ${
-                       isActive
-                         ? "bg-indigo-700 dark:bg-indigo-900 text-white"
-                         : "hover:bg-indigo-500 dark:hover:bg-indigo-700 text-gray-100"
-                     }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              );
-            })}
-
-            <hr className="border-indigo-500 dark:border-indigo-700 my-2" />
-
-            {/* Notifications Link */}
-            <button
-              onClick={() => {
-                setNotifOpen(true);
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-500 dark:hover:bg-indigo-700 text-gray-100 transition"
+      {/* Mobile Menu */}
+      <div className={`md:hidden bg-indigo-600 dark:bg-indigo-800 border-t border-indigo-700 transition-all duration-300 ease-in-out ${
+        mobileMenuOpen ? "max-h-screen" : "max-h-0 overflow-hidden"
+      }`}>
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          {filteredLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              onClick={() => setMobileMenuOpen(false)}
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base font-medium transition
+                ${
+                  isActive
+                    ? "bg-indigo-700 dark:bg-indigo-900 text-white"
+                    : "hover:bg-indigo-500 dark:hover:bg-indigo-700 text-gray-100"
+                }`
+              }
             >
-              🔔 Notifications ({notifications.length})
-            </button>
+              {link.label}
+            </NavLink>
+          ))}
 
-            <div className="px-3 py-2 text-gray-200 text-sm">{user.email}</div>
+          <hr className="border-indigo-500 dark:border-indigo-700 my-2" />
 
-            <button
-              onClick={() => {
-                logout();
-                navigate("/login", { replace: true });
-              }}
-              className="w-full text-left px-3 py-2 bg-red-500 hover:bg-red-600 rounded-md text-base font-medium text-white transition"
-            >
-              Logout
-            </button>
-          </div>
+          {/* Notifications Link */}
+          <button
+            onClick={() => {
+              setNotifOpen(true);
+              setMobileMenuOpen(false);
+            }}
+            className="w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-500 dark:hover:bg-indigo-700 text-gray-100 transition"
+          >
+            🔔 Notifications ({notifications.length})
+          </button>
+
+          <div className="px-3 py-2 text-gray-200 text-sm">{user.email}</div>
+
+          <button
+            onClick={() => {
+              logout();
+              navigate("/login", { replace: true });
+            }}
+            className="w-full text-left px-3 py-2 bg-red-500 hover:bg-red-600 rounded-md text-base font-medium text-white transition"
+          >
+            Logout
+          </button>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
