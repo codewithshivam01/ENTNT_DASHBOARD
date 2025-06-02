@@ -24,7 +24,7 @@ export default function MaintenanceForm() {
   const onSubmit = e => {
     e.preventDefault();
 
-    // Prevent past dates
+    // for preventing previous date
     if (form.date < today) {
       alert('Date cannot be before today.');
       return;

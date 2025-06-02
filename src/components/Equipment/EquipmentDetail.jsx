@@ -1,4 +1,4 @@
-// src/components/Equipment/EquipmentDetail.jsx
+
 import React, { useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { EquipmentContext } from '../../contexts/EquipmentContext';

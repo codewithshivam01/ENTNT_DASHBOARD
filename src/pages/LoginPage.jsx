@@ -1,27 +1,6 @@
-// import React, { useContext, useEffect } from 'react';
-// import { AuthContext } from '../contexts/AuthContext';
-// import { useNavigate } from 'react-router-dom';
-// import LoginForm from '../components/Authentication/LoginForm';
-
-// export default function LoginPage() {
-//   const { user } = useContext(AuthContext);
-//   const nav = useNavigate();
-
-//   useEffect(() => {
-//     if (user) nav('/dashboard');
-//   }, [user]);
-
-//   return (
-//     <div className="h-screen flex items-center justify-center bg-gray-100">
-//       <LoginForm />
-//     </div>
-//   );
-// }
-
-// src/pages/LoginPage.jsx
-import React, { useState, useContext, useEffect } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const { user, login } = useContext(AuthContext);
@@ -30,19 +9,19 @@ export default function LoginPage() {
   // If already logged in, redirect to dashboard
   useEffect(() => {
     if (user) {
-      navigate('/dashboard', { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [user, navigate]);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = login(email.trim(), password);
     if (!success) {
-      setError('Invalid email or password.');
+      setError("Invalid email or password.");
     }
   };
 
@@ -61,25 +40,32 @@ export default function LoginPage() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 d="M9 12h6m2 0a2 2 0 100-4h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v3H5a2 2 0 100 4h1v3a2 2 0 002 2h6a2 2 0 002-2v-3h1a2 2 0 100-4h-1V5z"
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-800">ENTNT Equipment Rentals</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            ENTNT Equipment Rentals
+          </h1>
           <p className="text-sm text-gray-500 mt-1">Dashboard Login</p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="px-8 py-6">
           {error && (
             <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
               {error}
             </div>
           )}
-          {/* Email */}
+
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1"
+            >
               Email
             </label>
             <input
@@ -94,9 +80,11 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password */}
           <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
               Password
             </label>
             <input
@@ -110,7 +98,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-md transition"
@@ -119,7 +106,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Footer */}
         <div className="px-8 py-4 border-t text-center text-sm text-gray-500">
           © {new Date().getFullYear()} ENTNT. All rights reserved.
         </div>
@@ -127,4 +113,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
